@@ -36,7 +36,11 @@ protected:
 	UInputAction* MoveAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* LookAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	UInputAction* FocusAction;
 
 	void Move(const FInputActionInstance& Instance);
 	void Look(const FInputActionInstance& Instance);
-}; 
+	//void FocusStart(const FInputActionInstance& Instance);
+	//void FocusEnd(const FInputActionInstance& Instance);
+};
