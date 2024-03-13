@@ -41,6 +41,6 @@ protected:
 
 	void Move(const FInputActionInstance& Instance);
 	void Look(const FInputActionInstance& Instance);
-	//void FocusStart(const FInputActionInstance& Instance);
-	//void FocusEnd(const FInputActionInstance& Instance);
+	void FocusStart(const FInputActionInstance& Instance);
+	void FocusEnd(const FInputActionInstance& Instance);
 };
