@@ -26,7 +26,7 @@ public:
 	virtual void OnUnPossess() override;
 protected:
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	ATPSCharacter* PossessedChar = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)

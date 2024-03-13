@@ -21,6 +21,19 @@ void ATPSPlayerController::PostInitializeComponents()
 void ATPSPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ATPSCharacter* playerChar = Cast<ATPSCharacter>(GetPawn());
+
+	if (playerChar == nullptr)
+		return;
+
+	PossessedChar = playerChar;
+
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
+	if (Subsystem != nullptr)
+	{
+		Subsystem->AddMappingContext(DefaultMappingContext, 0);
+	}
 }
 
 void ATPSPlayerController::SetupInputComponent()
@@ -40,17 +53,8 @@ void ATPSPlayerController::SetupInputComponent()
 void ATPSPlayerController::OnPossess(APawn* aPawn)
 {
 	Super::OnPossess(aPawn);
-	ATPSCharacter* playerChar = Cast<ATPSCharacter>(GetPawn());
+	
 
-	if (playerChar == nullptr)
-		return;
-
-	PossessedChar = playerChar;
-	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(this->GetLocalPlayer());
-	if (Subsystem != nullptr)
-	{
-		Subsystem->AddMappingContext(DefaultMappingContext, 0);
-	}
 }
 
 void ATPSPlayerController::OnUnPossess()
@@ -78,12 +82,6 @@ void ATPSPlayerController::Move(const FInputActionInstance& Instance)
 
 	FVector2D MovementVector = Instance.GetValue().Get<FVector2D>();
 
-	// Rotate Character Mesh according to moveDirection
-	FRotator curMeshRot = PossessedChar->GetMesh()->GetComponentRotation();
-	FRotator targetRot = (camForward * MovementVector.Y + camRight * MovementVector.X).Rotation();
-	targetRot.Add(0, -90.0f, 0);
-	FRotator newRot = FMath::RInterpTo(curMeshRot, targetRot, GetWorld()->GetDeltaSeconds(), 5.0f);
-	PossessedChar->GetMesh()->SetWorldRotation(newRot);
 
 	PossessedChar->AddMovementInput(camForward, MovementVector.Y);
 	PossessedChar->AddMovementInput(camRight, MovementVector.X);
@@ -102,7 +100,6 @@ void ATPSPlayerController::Look(const FInputActionInstance& Instance)
 
 	FRotator springArmRot = springArmComp->GetComponentRotation();
 	FVector2D LookVector = Instance.GetValue().Get<FVector2D>();
-
 	PossessedChar->AddControllerYawInput(LookVector.Y);
 	PossessedChar->AddControllerPitchInput(LookVector.X);
 }

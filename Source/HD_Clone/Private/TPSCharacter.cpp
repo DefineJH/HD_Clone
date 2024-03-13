@@ -24,6 +24,11 @@ ATPSCharacter::ATPSCharacter()
 	cameraComp = CreateDefaultSubobject<UCameraComponent>(L"Camera Component");
 	cameraComp->SetupAttachment(springArmComp);
 	cameraComp->bUsePawnControlRotation = false;
+
+
+	bReplicates = true;
+	SetReplicateMovement(true);
+
 }
 
 // Called when the game starts or when spawned
@@ -50,7 +55,7 @@ void ATPSCharacter::BeginPlay()
 void ATPSCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 
 // Called to bind functionality to input
