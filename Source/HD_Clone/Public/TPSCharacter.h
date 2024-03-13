@@ -8,9 +8,8 @@
 
 class USpringArmComponent;
 class UCameraComponent;
-class UInputMappingContext;
-class UInputAction;
-struct FInputActionInstance;
+class ATPSWeapon;
+
 UCLASS()
 class HD_CLONE_API ATPSCharacter : public ACharacter
 {
@@ -31,20 +30,28 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION(BlueprintCallable)
+	EWeaponType GetCurWeaponType() const;
+
+private:
+	ATPSWeapon* SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass);
+
 protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Camera")
 	USpringArmComponent* springArmComp;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Camera")
 	UCameraComponent* cameraComp;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	TSubclassOf<ATPSWeapon> mainWeaponClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	TSubclassOf<ATPSWeapon> subWeaponClass;
+	
+	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
+	ATPSWeapon* mainWeapon;
+	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
+	ATPSWeapon* subWeapon;
+	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
+	ATPSWeapon* curWeapon;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	UInputMappingContext* DefaultMappingContext; 
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	UInputAction* MoveAction;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	UInputAction* LookAction;
-	void Move(const FInputActionInstance& Instance);
-	void Look(const FInputActionInstance& Instance);
 };

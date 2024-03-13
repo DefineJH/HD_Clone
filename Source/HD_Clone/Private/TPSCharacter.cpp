@@ -2,6 +2,8 @@
 
 
 #include "TPSCharacter.h"
+#include "TPSWeapon.h"
+
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include <InputMappingContext.h>
@@ -22,22 +24,25 @@ ATPSCharacter::ATPSCharacter()
 	cameraComp = CreateDefaultSubobject<UCameraComponent>(L"Camera Component");
 	cameraComp->SetupAttachment(springArmComp);
 	cameraComp->bUsePawnControlRotation = false;
-
-
 }
 
 // Called when the game starts or when spawned
 void ATPSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	APlayerController* PlayerController = Cast<APlayerController>(Controller);
-	if (PlayerController != nullptr)
+	// 무기 세팅
+	if (mainWeaponClass)
 	{
-		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
-		if (Subsystem != nullptr)
-		{
-			Subsystem->AddMappingContext(DefaultMappingContext, 0);
-		}
+		mainWeapon = SpawnWeapon(mainWeaponClass);
+		checkf(mainWeapon != nullptr, L"Main Weapon Didn't Spawned");
+		curWeapon = mainWeapon;
+	}
+	if (subWeaponClass)
+	{
+		subWeapon = SpawnWeapon(subWeaponClass);
+		checkf(subWeapon != nullptr, L"Sub Weapon Didn't Spawned");
+		if (subWeapon)
+			subWeapon->SetActorHiddenInGame(true);
 	}
 }
 
@@ -52,33 +57,44 @@ void ATPSCharacter::Tick(float DeltaTime)
 void ATPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
-
-	if (Input != nullptr)
-	{
-		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATPSCharacter::Move);
-		Input->BindAction(LookAction, ETriggerEvent::Triggered, this, &ATPSCharacter::Look);
-	}
 }
 
-void ATPSCharacter::Move(const FInputActionInstance& Instance)
+EWeaponType ATPSCharacter::GetCurWeaponType() const
 {
-	FVector2D MovementVector = Instance.GetValue().Get<FVector2D>();
-
-	if (GetController() != nullptr)
-	{
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-		const FVector FowardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
-		AddMovementInput(FowardDirection, MovementVector.Y);
-		AddMovementInput(RightDirection, MovementVector.X);
-	}
+	checkf(curWeapon != nullptr, L"Cur Weapon is Nullptr");
+	return curWeapon->getWeaponType();
 }
 
-void ATPSCharacter::Look(const FInputActionInstance& Instance)
+ATPSWeapon* ATPSCharacter::SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass)
 {
-	FVector2D LookVector = Instance.GetValue().Get<FVector2D>();
+	FActorSpawnParameters spawnParams;
+	spawnParams.Owner = this;
+	spawnParams.Instigator = GetInstigator();
+
+	ATPSWeapon* spawnWeapon = GetWorld()->SpawnActor<ATPSWeapon>(mainWeaponClass, spawnParams);
+	if (spawnWeapon)
+	{
+		FName weaponSocketName;
+
+		EWeaponType type = spawnWeapon->getWeaponType();
+		switch (type)
+		{
+		case EWeaponType::WT_Pistol:
+			weaponSocketName = L"Pistol_R";
+			break;
+		case EWeaponType::WT_Rifle:
+			weaponSocketName = L"Rifle_R";
+			break;
+		default:
+			weaponSocketName = L"";
+		}
+
+		if (weaponSocketName != L"")
+		{
+			spawnWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, weaponSocketName);
+			return spawnWeapon;
+		}
+	}
+	return nullptr;
 }
 
