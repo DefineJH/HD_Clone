@@ -37,6 +37,11 @@ private:
 	ATPSWeapon* SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass);
 
 protected:
+
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	void GetControlRotation_Rep();
+
+protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Camera")
 	USpringArmComponent* springArmComp;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Camera")
@@ -54,4 +59,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	ATPSWeapon* curWeapon;
 
+
+	UPROPERTY( BlueprintReadOnly, Replicated )
+	FRotator controlRot;
 };

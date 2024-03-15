@@ -12,6 +12,10 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+
+#include "Net/UnrealNetwork.h"
+
+
 // Sets default values
 ATPSCharacter::ATPSCharacter()
 {
@@ -55,6 +59,7 @@ void ATPSCharacter::BeginPlay()
 void ATPSCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	GetControlRotation_Rep();
 	
 }
 
@@ -101,5 +106,20 @@ ATPSWeapon* ATPSCharacter::SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass)
 		}
 	}
 	return nullptr;
+}
+
+void ATPSCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME_CONDITION(ATPSCharacter, controlRot, COND_SkipOwner);
+}
+
+void ATPSCharacter::GetControlRotation_Rep()
+{
+	if (HasAuthority() || IsLocallyControlled())
+	{
+		controlRot = GetController()->GetControlRotation();
+	}
 }
 
