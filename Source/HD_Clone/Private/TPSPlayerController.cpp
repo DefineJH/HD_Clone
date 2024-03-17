@@ -47,6 +47,8 @@ void ATPSPlayerController::SetupInputComponent()
 		Input->BindAction(LookAction, ETriggerEvent::Triggered, this, &ATPSPlayerController::Look);
 		Input->BindAction(FocusAction, ETriggerEvent::Started, this, &ATPSPlayerController::FocusStart);
 		Input->BindAction(FocusAction, ETriggerEvent::Completed, this, &ATPSPlayerController::FocusEnd);
+		Input->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &ATPSPlayerController::ToggleCrouch);
+		Input->BindAction(ReloadAction, ETriggerEvent::Triggered, this, &ATPSPlayerController::Reload);
 	}
 
 }
@@ -108,10 +110,26 @@ void ATPSPlayerController::Look(const FInputActionInstance& Instance)
 
 void ATPSPlayerController::FocusStart(const FInputActionInstance& Instance)
 {
-
+ 
 }
 
 void ATPSPlayerController::FocusEnd(const FInputActionInstance& Instance)
 {
+}
+
+void ATPSPlayerController::ToggleCrouch(const FInputActionInstance& Instance)
+{
+	if (PossessedChar == nullptr)
+		return;
+
+	if (PossessedChar->bIsCrouched)
+		PossessedChar->UnCrouch(true);
+	else
+		PossessedChar->Crouch(true);
+}
+
+void ATPSPlayerController::Reload(const FInputActionInstance& Instance)
+{
+
 }
 

@@ -30,16 +30,16 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UFUNCTION(BlueprintCallable)
-	EWeaponType GetCurWeaponType() const;
-
-private:
+protected:
 	ATPSWeapon* SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass);
-
+	UFUNCTION( BlueprintCallable )
+	EWeaponType getCurrentWeaponType() const;
 protected:
 
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	void GetControlRotation_Rep();
+
+	void GetTurn_Rep();
 
 protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Camera")
@@ -60,6 +60,8 @@ protected:
 	ATPSWeapon* curWeapon;
 
 
-	UPROPERTY( BlueprintReadOnly, Replicated )
+	UPROPERTY( BlueprintReadOnly, Replicated)
 	FRotator controlRot;
+	UPROPERTY(BlueprintReadOnly, Replicated)
+	float controlTurn;
 };

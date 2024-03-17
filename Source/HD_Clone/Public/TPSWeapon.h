@@ -12,7 +12,8 @@ UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {
 	WT_Pistol,
-	WT_Rifle
+	WT_Rifle,
+	WT_UnArmed
 };
 UCLASS()
 class HD_CLONE_API ATPSWeapon : public AActor

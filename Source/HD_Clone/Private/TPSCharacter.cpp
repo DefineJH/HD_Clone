@@ -15,6 +15,7 @@
 
 #include "Net/UnrealNetwork.h"
 
+#include "GameFramework/PawnMovementComponent.h"
 
 // Sets default values
 ATPSCharacter::ATPSCharacter()
@@ -30,6 +31,7 @@ ATPSCharacter::ATPSCharacter()
 	cameraComp->bUsePawnControlRotation = false;
 
 
+	GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
 	bReplicates = true;
 	SetReplicateMovement(true);
 
@@ -39,6 +41,8 @@ ATPSCharacter::ATPSCharacter()
 void ATPSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+
 	// 무기 세팅
 	if (mainWeaponClass)
 	{
@@ -60,6 +64,7 @@ void ATPSCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	GetControlRotation_Rep();
+	GetTurn_Rep();
 	
 }
 
@@ -69,11 +74,7 @@ void ATPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-EWeaponType ATPSCharacter::GetCurWeaponType() const
-{
-	checkf(curWeapon != nullptr, L"Cur Weapon is Nullptr");
-	return curWeapon->getWeaponType();
-}
+
 
 ATPSWeapon* ATPSCharacter::SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass)
 {
@@ -108,11 +109,20 @@ ATPSWeapon* ATPSCharacter::SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass)
 	return nullptr;
 }
 
+EWeaponType ATPSCharacter::getCurrentWeaponType() const
+{
+	if (curWeapon == nullptr)
+		return EWeaponType::WT_UnArmed;
+	else
+		return curWeapon->getWeaponType();
+}
+
 void ATPSCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME_CONDITION(ATPSCharacter, controlRot, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(ATPSCharacter, controlTurn, COND_SkipOwner);
 }
 
 void ATPSCharacter::GetControlRotation_Rep()
@@ -120,6 +130,16 @@ void ATPSCharacter::GetControlRotation_Rep()
 	if (HasAuthority() || IsLocallyControlled())
 	{
 		controlRot = GetController()->GetControlRotation();
+	}
+}
+
+void ATPSCharacter::GetTurn_Rep()
+{
+	if (HasAuthority() || IsLocallyControlled())
+	{
+		FRotator rot = GetActorForwardVector().Rotation() - cameraComp->GetForwardVector().Rotation();
+		rot.Normalize();
+		controlTurn = rot.Yaw;
 	}
 }
 
