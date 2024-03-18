@@ -195,8 +195,6 @@ void ATPSCharacter::FireStart()
 	{
 		ServerStartFire();
 	}
-
-
 }
 
 void ATPSCharacter::FireEnd()

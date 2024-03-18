@@ -44,7 +44,13 @@ protected:
 	UInputAction* ReloadAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* FireAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	UInputAction* SprintAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input)
+	float walkSpeed = 300.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input)
+	float runSpeed = 600.0f;
 
 	void Move(const FInputActionInstance& Instance);
 	void Look(const FInputActionInstance& Instance);
@@ -54,6 +60,7 @@ protected:
 	void Reload(const FInputActionInstance& Instance);
 	void FireStart(const FInputActionInstance& Instance);
 	void FireEnd(const FInputActionInstance& Instance);
-
+	void StartSprint(const FInputActionInstance& Instance);
+	void EndSprint(const FInputActionInstance& Instance);
 
 };

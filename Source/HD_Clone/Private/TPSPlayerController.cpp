@@ -13,6 +13,8 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
+
 void ATPSPlayerController::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
@@ -51,6 +53,8 @@ void ATPSPlayerController::SetupInputComponent()
 		Input->BindAction(ReloadAction, ETriggerEvent::Triggered, this, &ATPSPlayerController::Reload);
 		Input->BindAction(FireAction, ETriggerEvent::Started, this, &ATPSPlayerController::FireStart);
 		Input->BindAction(FireAction, ETriggerEvent::Completed, this, &ATPSPlayerController::FireEnd);
+		Input->BindAction(SprintAction, ETriggerEvent::Started, this, &ATPSPlayerController::StartSprint);
+		Input->BindAction(SprintAction, ETriggerEvent::Completed, this, &ATPSPlayerController::EndSprint);
 	}
 
 }
@@ -141,6 +145,9 @@ void ATPSPlayerController::FireStart(const FInputActionInstance& Instance)
 	if (PossessedChar == nullptr)
 		return;
 
+	if (PossessedChar->GetCharacterMovement()->MaxWalkSpeed == runSpeed) {
+		EndSprint(Instance); 
+	}
 	PossessedChar->FireStart();
 }
 
@@ -150,5 +157,22 @@ void ATPSPlayerController::FireEnd(const FInputActionInstance& Instance)
 		return;
 
 	PossessedChar->FireEnd();
+}
+
+void ATPSPlayerController::StartSprint(const FInputActionInstance& Instance)
+{
+	if (PossessedChar == nullptr)
+		return;
+	
+	FireEnd(Instance);
+	PossessedChar->GetCharacterMovement()->MaxWalkSpeed = runSpeed;
+}
+
+void ATPSPlayerController::EndSprint(const FInputActionInstance& Instance)
+{
+	if (PossessedChar == nullptr)
+		return;
+
+	PossessedChar->GetCharacterMovement()->MaxWalkSpeed = walkSpeed;
 }
 
