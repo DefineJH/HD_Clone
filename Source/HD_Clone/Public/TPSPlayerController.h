@@ -42,6 +42,9 @@ protected:
 	UInputAction* CrouchAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* ReloadAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	UInputAction* FireAction;
+
 
 	void Move(const FInputActionInstance& Instance);
 	void Look(const FInputActionInstance& Instance);
@@ -49,4 +52,8 @@ protected:
 	void FocusEnd(const FInputActionInstance& Instance);
 	void ToggleCrouch(const FInputActionInstance& Instance);
 	void Reload(const FInputActionInstance& Instance);
+	void FireStart(const FInputActionInstance& Instance);
+	void FireEnd(const FInputActionInstance& Instance);
+
+
 };

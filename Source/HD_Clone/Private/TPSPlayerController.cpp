@@ -49,6 +49,8 @@ void ATPSPlayerController::SetupInputComponent()
 		Input->BindAction(FocusAction, ETriggerEvent::Completed, this, &ATPSPlayerController::FocusEnd);
 		Input->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &ATPSPlayerController::ToggleCrouch);
 		Input->BindAction(ReloadAction, ETriggerEvent::Triggered, this, &ATPSPlayerController::Reload);
+		Input->BindAction(FireAction, ETriggerEvent::Started, this, &ATPSPlayerController::FireStart);
+		Input->BindAction(FireAction, ETriggerEvent::Completed, this, &ATPSPlayerController::FireEnd);
 	}
 
 }
@@ -57,8 +59,6 @@ void ATPSPlayerController::SetupInputComponent()
 void ATPSPlayerController::OnPossess(APawn* aPawn)
 {
 	Super::OnPossess(aPawn);
-	
-
 }
 
 void ATPSPlayerController::OnUnPossess()
@@ -130,6 +130,25 @@ void ATPSPlayerController::ToggleCrouch(const FInputActionInstance& Instance)
 
 void ATPSPlayerController::Reload(const FInputActionInstance& Instance)
 {
+	if (PossessedChar == nullptr)
+		return;
 
+	PossessedChar->Reload();
+}
+
+void ATPSPlayerController::FireStart(const FInputActionInstance& Instance)
+{
+	if (PossessedChar == nullptr)
+		return;
+
+	PossessedChar->FireStart();
+}
+
+void ATPSPlayerController::FireEnd(const FInputActionInstance& Instance)
+{
+	if (PossessedChar == nullptr)
+		return;
+
+	PossessedChar->FireEnd();
 }
 

@@ -29,11 +29,40 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	// Reload Initiate Function
+	void Reload();
+	
+	// Call Fire for curWeapon
+	void FireWeapon();
 
+	// FireStart Initiate Function
+	void FireStart();
+	// FireEnd Initate Function
+	void FireEnd();
 protected:
 	ATPSWeapon* SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass);
 	UFUNCTION( BlueprintCallable )
 	EWeaponType getCurrentWeaponType() const;
+
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerReload();
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerStartFire();
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerStopFire();
+	
+	
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastPlayReloadAnimation();
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastStartFireAnimation();
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastStopFireAnimation();
+
+	void StartPlayFireAnimation();
+	void StopPlayFireAnimation();
+	void PlayReloadAnimation();
 protected:
 
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
@@ -41,6 +70,8 @@ protected:
 
 	void GetTurn_Rep();
 
+private:
+	void SetupWeapon();
 protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Camera")
 	USpringArmComponent* springArmComp;
@@ -58,6 +89,7 @@ protected:
 	ATPSWeapon* subWeapon;
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	ATPSWeapon* curWeapon;
+
 
 
 	UPROPERTY( BlueprintReadOnly, Replicated)
