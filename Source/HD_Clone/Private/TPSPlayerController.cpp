@@ -13,6 +13,8 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
+
 void ATPSPlayerController::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
@@ -23,11 +25,14 @@ void ATPSPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	ATPSCharacter* playerChar = Cast<ATPSCharacter>(GetPawn());
-
 	if (playerChar == nullptr)
 		return;
 
 	PossessedChar = playerChar;
+	USpringArmComponent* springArmComp = PossessedChar->GetComponentByClass<USpringArmComponent>();
+
+	if (springArmComp != nullptr)
+		springArmComp->TargetArmLength = armLength_NotAim;
 
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 	if (Subsystem != nullptr)
@@ -45,8 +50,14 @@ void ATPSPlayerController::SetupInputComponent()
 	{
 		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATPSPlayerController::Move);
 		Input->BindAction(LookAction, ETriggerEvent::Triggered, this, &ATPSPlayerController::Look);
-		Input->BindAction(FocusAction, ETriggerEvent::Started, this, &ATPSPlayerController::FocusStart);
-		Input->BindAction(FocusAction, ETriggerEvent::Completed, this, &ATPSPlayerController::FocusEnd);
+		Input->BindAction(AimAction, ETriggerEvent::Started, this, &ATPSPlayerController::StartAim);
+		Input->BindAction(AimAction, ETriggerEvent::Completed, this, &ATPSPlayerController::EndAim);
+		Input->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &ATPSPlayerController::ToggleCrouch);
+		Input->BindAction(ReloadAction, ETriggerEvent::Triggered, this, &ATPSPlayerController::Reload);
+		Input->BindAction(FireAction, ETriggerEvent::Started, this, &ATPSPlayerController::FireStart);
+		Input->BindAction(FireAction, ETriggerEvent::Completed, this, &ATPSPlayerController::FireEnd);
+		Input->BindAction(SprintAction, ETriggerEvent::Started, this, &ATPSPlayerController::StartSprint);
+		Input->BindAction(SprintAction, ETriggerEvent::Completed, this, &ATPSPlayerController::EndSprint);
 	}
 
 }
@@ -55,8 +66,6 @@ void ATPSPlayerController::SetupInputComponent()
 void ATPSPlayerController::OnPossess(APawn* aPawn)
 {
 	Super::OnPossess(aPawn);
-	
-
 }
 
 void ATPSPlayerController::OnUnPossess()
@@ -78,7 +87,6 @@ void ATPSPlayerController::Move(const FInputActionInstance& Instance)
 
 	FVector camForward = playerCameraComp->GetForwardVector();
 	camForward.Z = 0; camForward.Normalize();
-
 	FVector camRight = playerCameraComp->GetRightVector();
 	camRight.Z = 0; camRight.Normalize();
 
@@ -106,12 +114,84 @@ void ATPSPlayerController::Look(const FInputActionInstance& Instance)
 	PossessedChar->AddControllerPitchInput(LookVector.X);
 }
 
-void ATPSPlayerController::FocusStart(const FInputActionInstance& Instance)
+void ATPSPlayerController::StartAim(const FInputActionInstance& Instance)
 {
+	if (PossessedChar == nullptr)
+		return;
 
+	USpringArmComponent* springArmComp = PossessedChar->GetComponentByClass<USpringArmComponent>();
+
+	if (springArmComp == nullptr)
+		return;
+
+	springArmComp->TargetArmLength = armLength_Aim;
 }
 
-void ATPSPlayerController::FocusEnd(const FInputActionInstance& Instance)
+void ATPSPlayerController::EndAim(const FInputActionInstance& Instance)
 {
+	if (PossessedChar == nullptr)
+		return;
+
+	USpringArmComponent* springArmComp = PossessedChar->GetComponentByClass<USpringArmComponent>();
+
+	if (springArmComp == nullptr)
+		return;
+
+	springArmComp->TargetArmLength = armLength_NotAim;
+}
+
+void ATPSPlayerController::ToggleCrouch(const FInputActionInstance& Instance)
+{
+	if (PossessedChar == nullptr)
+		return;
+
+	if (PossessedChar->bIsCrouched)
+		PossessedChar->UnCrouch(true);
+	else
+		PossessedChar->Crouch(true);
+}
+
+void ATPSPlayerController::Reload(const FInputActionInstance& Instance)
+{
+	if (PossessedChar == nullptr)
+		return;
+
+	PossessedChar->Reload();
+}
+
+void ATPSPlayerController::FireStart(const FInputActionInstance& Instance)
+{
+	if (PossessedChar == nullptr)
+		return;
+
+	if (PossessedChar->GetCharacterMovement()->MaxWalkSpeed == runSpeed) {
+		EndSprint(Instance); 
+	}
+	PossessedChar->FireStart();
+}
+
+void ATPSPlayerController::FireEnd(const FInputActionInstance& Instance)
+{
+	if (PossessedChar == nullptr)
+		return;
+
+	PossessedChar->FireEnd();
+}
+
+void ATPSPlayerController::StartSprint(const FInputActionInstance& Instance)
+{
+	if (PossessedChar == nullptr)
+		return;
+	
+	FireEnd(Instance);
+	PossessedChar->GetCharacterMovement()->MaxWalkSpeed = runSpeed;
+}
+
+void ATPSPlayerController::EndSprint(const FInputActionInstance& Instance)
+{
+	if (PossessedChar == nullptr)
+		return;
+
+	PossessedChar->GetCharacterMovement()->MaxWalkSpeed = walkSpeed;
 }
 

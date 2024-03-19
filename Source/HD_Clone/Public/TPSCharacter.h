@@ -29,18 +29,52 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	// Reload Initiate Function
+	void Reload();
+	
+	// Call Fire for curWeapon
+	void FireWeapon();
 
-	UFUNCTION(BlueprintCallable)
-	EWeaponType GetCurWeaponType() const;
+	// FireStart Initiate Function
+	void FireStart();
+	// FireEnd Initate Function
+	void FireEnd();
 
-private:
+	void StartAim();
+	void EndAim();
+protected:
 	ATPSWeapon* SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass);
+	UFUNCTION( BlueprintCallable )
+	EWeaponType getCurrentWeaponType() const;
 
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerReload();
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerStartFire();
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerStopFire();
+	
+	
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastPlayReloadAnimation();
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastStartFireAnimation();
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastStopFireAnimation();
+
+	void StartPlayFireAnimation();
+	void StopPlayFireAnimation();
+	void PlayReloadAnimation();
 protected:
 
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	void GetControlRotation_Rep();
 
+	void GetTurn_Rep();
+
+private:
+	void SetupWeapon();
 protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Camera")
 	USpringArmComponent* springArmComp;
@@ -60,6 +94,10 @@ protected:
 	ATPSWeapon* curWeapon;
 
 
-	UPROPERTY( BlueprintReadOnly, Replicated )
+
+	UPROPERTY( BlueprintReadOnly, Replicated)
 	FRotator controlRot;
+	UPROPERTY(BlueprintReadOnly, Replicated)
+	float controlTurn;
+
 };

@@ -15,7 +15,7 @@
 
 #include "Net/UnrealNetwork.h"
 
-
+#include "GameFramework/PawnMovementComponent.h"
 // Sets default values
 ATPSCharacter::ATPSCharacter()
 {
@@ -30,6 +30,7 @@ ATPSCharacter::ATPSCharacter()
 	cameraComp->bUsePawnControlRotation = false;
 
 
+	GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
 	bReplicates = true;
 	SetReplicateMovement(true);
 
@@ -39,20 +40,7 @@ ATPSCharacter::ATPSCharacter()
 void ATPSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	// 무기 세팅
-	if (mainWeaponClass)
-	{
-		mainWeapon = SpawnWeapon(mainWeaponClass);
-		checkf(mainWeapon != nullptr, L"Main Weapon Didn't Spawned");
-		curWeapon = mainWeapon;
-	}
-	if (subWeaponClass)
-	{
-		subWeapon = SpawnWeapon(subWeaponClass);
-		checkf(subWeapon != nullptr, L"Sub Weapon Didn't Spawned");
-		if (subWeapon)
-			subWeapon->SetActorHiddenInGame(true);
-	}
+	SetupWeapon();
 }
 
 // Called every frame
@@ -60,7 +48,16 @@ void ATPSCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	GetControlRotation_Rep();
+	GetTurn_Rep();
 	
+}
+
+void ATPSCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME_CONDITION(ATPSCharacter, controlRot, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(ATPSCharacter, controlTurn, COND_SkipOwner);
 }
 
 // Called to bind functionality to input
@@ -69,11 +66,7 @@ void ATPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-EWeaponType ATPSCharacter::GetCurWeaponType() const
-{
-	checkf(curWeapon != nullptr, L"Cur Weapon is Nullptr");
-	return curWeapon->getWeaponType();
-}
+#pragma region Weapon Functions
 
 ATPSWeapon* ATPSCharacter::SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass)
 {
@@ -108,12 +101,172 @@ ATPSWeapon* ATPSCharacter::SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass)
 	return nullptr;
 }
 
-void ATPSCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+EWeaponType ATPSCharacter::getCurrentWeaponType() const
 {
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME_CONDITION(ATPSCharacter, controlRot, COND_SkipOwner);
+	if (curWeapon == nullptr)
+		return EWeaponType::WT_UnArmed;
+	else
+		return curWeapon->getWeaponType();
 }
+
+void ATPSCharacter::SetupWeapon()
+{
+	if (mainWeaponClass)
+	{
+		mainWeapon = SpawnWeapon(mainWeaponClass);
+		checkf(mainWeapon != nullptr, L"Main Weapon Didn't Spawned");
+		curWeapon = mainWeapon;
+	}
+	if (subWeaponClass)
+	{
+		subWeapon = SpawnWeapon(subWeaponClass);
+		checkf(subWeapon != nullptr, L"Sub Weapon Didn't Spawned");
+		if (subWeapon)
+			subWeapon->SetActorHiddenInGame(true);
+	}
+}
+
+
+#pragma region Reload Functions
+
+void ATPSCharacter::Reload()
+{
+	// Host -> 멀티캐스트
+	if (HasAuthority())
+	{
+		MulticastPlayReloadAnimation();
+	}
+	// Client -> 서버 함수 호출
+	else
+	{
+		ServerReload();
+	}
+}
+
+void ATPSCharacter::FireWeapon()
+{
+	if (curWeapon == nullptr)
+		return;
+	curWeapon->Fire();
+}
+
+void ATPSCharacter::ServerReload_Implementation()
+{
+	MulticastPlayReloadAnimation();
+}
+
+bool ATPSCharacter::ServerReload_Validate()
+{
+	return true;
+}
+
+void ATPSCharacter::MulticastPlayReloadAnimation_Implementation()
+{
+	PlayReloadAnimation();
+}
+
+void ATPSCharacter::PlayReloadAnimation()
+{
+	if (!curWeapon)
+		return;
+
+	UAnimMontage* reloadMontage = curWeapon->getReloadMontage();
+	if (reloadMontage)
+	{
+		PlayAnimMontage(reloadMontage);
+	}
+}
+
+#pragma endregion
+
+#pragma region Fire Functions
+
+void ATPSCharacter::FireStart()
+{
+	// Host -> 멀티캐스트
+	if (HasAuthority())
+	{
+		MulticastStartFireAnimation();
+	}
+	// Client -> 서버 함수 호출
+	else
+	{
+		ServerStartFire();
+	}
+}
+
+void ATPSCharacter::FireEnd()
+{
+	// Host -> 멀티캐스트
+	if (HasAuthority())
+	{
+		MulticastStopFireAnimation();
+	}
+	// Client -> 서버 함수 호출
+	else
+	{
+		ServerStopFire();
+	}
+}
+void ATPSCharacter::StartAim()
+{
+}
+void ATPSCharacter::EndAim()
+{
+}
+void ATPSCharacter::ServerStartFire_Implementation()
+{
+	MulticastStartFireAnimation();
+}
+bool ATPSCharacter::ServerStartFire_Validate()
+{
+	return true;
+}
+void ATPSCharacter::MulticastStartFireAnimation_Implementation()
+{
+	StartPlayFireAnimation();
+}
+
+void ATPSCharacter::ServerStopFire_Implementation()
+{
+	MulticastStopFireAnimation();
+}
+bool ATPSCharacter::ServerStopFire_Validate()
+{
+	return true;
+}
+void ATPSCharacter::MulticastStopFireAnimation_Implementation()
+{
+	StopPlayFireAnimation();
+}
+void ATPSCharacter::StartPlayFireAnimation()
+{
+	if (curWeapon)
+	{
+		if (!curWeapon->canFire())
+			return;
+		double fireRate = curWeapon->getFireRate();
+		UAnimMontage* fireMontage = curWeapon->getFireMontage();
+		
+		if (!fireMontage)
+			return;
+		if (GetMesh()->GetAnimInstance()->Montage_IsPlaying(fireMontage))
+			return;
+		PlayAnimMontage(fireMontage, fireMontage->GetPlayLength() / fireRate);
+	}
+}
+
+void ATPSCharacter::StopPlayFireAnimation()
+{
+	if (!curWeapon)
+		return;
+	StopAnimMontage(curWeapon->getFireMontage());
+}
+#pragma endregion
+
+#pragma endregion
+
+#pragma region Control Replication Functions
 
 void ATPSCharacter::GetControlRotation_Rep()
 {
@@ -122,4 +275,19 @@ void ATPSCharacter::GetControlRotation_Rep()
 		controlRot = GetController()->GetControlRotation();
 	}
 }
+
+void ATPSCharacter::GetTurn_Rep()
+{
+	if (HasAuthority() || IsLocallyControlled())
+	{
+		FRotator rot = GetActorForwardVector().Rotation() - cameraComp->GetForwardVector().Rotation();
+		rot.Normalize();
+		controlTurn = rot.Yaw;
+	}
+}
+
+
+#pragma endregion
+
+
 
