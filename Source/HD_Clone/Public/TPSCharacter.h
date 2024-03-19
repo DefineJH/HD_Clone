@@ -43,6 +43,8 @@ public:
 
 	void StartAim();
 	void EndAim();
+
+
 protected:
 	ATPSWeapon* SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass);
 	UFUNCTION( BlueprintCallable )

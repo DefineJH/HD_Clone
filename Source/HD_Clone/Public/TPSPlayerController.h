@@ -24,6 +24,11 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void OnUnPossess() override;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetShouldTurnRight() const { return bShouldTurnRight; }
+	UFUNCTION(BlueprintCallable)
+	bool GetShouldTurnLeft() const { return bShouldTurnLeft; }
 protected:
 
 	UPROPERTY(BlueprintReadOnly)
@@ -68,4 +73,9 @@ protected:
 	void StartSprint(const FInputActionInstance& Instance);
 	void EndSprint(const FInputActionInstance& Instance);
 
+
+private:
+	bool bIsAiming = false;
+	bool bShouldTurnRight = false;
+	bool bShouldTurnLeft = false;
 };
