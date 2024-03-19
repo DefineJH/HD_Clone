@@ -110,6 +110,35 @@ void ATPSPlayerController::Look(const FInputActionInstance& Instance)
 
 	FRotator springArmRot = springArmComp->GetComponentRotation();
 	FVector2D LookVector = Instance.GetValue().Get<FVector2D>();
+
+	//FRotator offset = GetControlRotation() - PossessedChar->GetActorRotation();
+	//offset.Normalize();
+	//UCharacterMovementComponent* movementComp = Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent());
+	//if (PossessedChar->GetVelocity().Length() == 0)
+	//{
+	//	if (offset.Yaw >= 90.f)
+	//	{
+	//		//Turn Right
+	//		movementComp->bUseControllerDesiredRotation = true;
+	//		movementComp->bOrientRotationToMovement = false;
+	//		bShouldTurnRight = true;
+	//	}
+	//	else if (offset.Yaw <= -90.f)
+	//	{
+	//		// Turn Left
+	//		movementComp->bUseControllerDesiredRotation = true;
+	//		movementComp->bOrientRotationToMovement = false;
+	//		bShouldTurnLeft = true;
+	//	}
+	//	else if(-1.f <= offset.Yaw && offset.Yaw <= 1.f)
+	//	{
+	//		movementComp->bUseControllerDesiredRotation = false;
+	//		movementComp->bOrientRotationToMovement = true;
+	//		bShouldTurnRight = true;
+	//		bShouldTurnLeft = true;
+	//	}
+	//}
+	//UE_LOG(LogTemp, Log, L"%f", offset.Yaw);
 	PossessedChar->AddControllerYawInput(LookVector.Y);
 	PossessedChar->AddControllerPitchInput(LookVector.X);
 }
@@ -123,7 +152,10 @@ void ATPSPlayerController::StartAim(const FInputActionInstance& Instance)
 
 	if (springArmComp == nullptr)
 		return;
-
+	EndSprint(Instance);
+	bIsAiming = true;
+	Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent())->bUseControllerDesiredRotation = true;
+	Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent())->bOrientRotationToMovement = false;
 	springArmComp->TargetArmLength = armLength_Aim;
 }
 
@@ -133,10 +165,12 @@ void ATPSPlayerController::EndAim(const FInputActionInstance& Instance)
 		return;
 
 	USpringArmComponent* springArmComp = PossessedChar->GetComponentByClass<USpringArmComponent>();
-
+	
 	if (springArmComp == nullptr)
 		return;
-
+	Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent())->bUseControllerDesiredRotation = false;
+	Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent())->bOrientRotationToMovement = true;
+	bIsAiming = false;
 	springArmComp->TargetArmLength = armLength_NotAim;
 }
 
@@ -167,6 +201,7 @@ void ATPSPlayerController::FireStart(const FInputActionInstance& Instance)
 	if (PossessedChar->GetCharacterMovement()->MaxWalkSpeed == runSpeed) {
 		EndSprint(Instance); 
 	}
+	
 	PossessedChar->FireStart();
 }
 
@@ -184,6 +219,7 @@ void ATPSPlayerController::StartSprint(const FInputActionInstance& Instance)
 		return;
 	
 	FireEnd(Instance);
+	EndAim(Instance);
 	PossessedChar->GetCharacterMovement()->MaxWalkSpeed = runSpeed;
 }
 
