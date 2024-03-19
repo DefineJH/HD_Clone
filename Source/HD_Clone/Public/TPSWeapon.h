@@ -44,6 +44,8 @@ public:
 	{
 		return fireMontage == nullptr ? nullptr : fireMontage;
 	}
+	
+	double getFireRate() const { return fireRate; }
 	bool canReload() const
 	{
 		return curMag == 0;
@@ -75,6 +77,9 @@ protected:
 	EWeaponType weaponType;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Weapon")
 	double weaponDamage;
+	/*
+	* how many 
+	*/
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Weapon")
 	double fireRate;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Weapon")

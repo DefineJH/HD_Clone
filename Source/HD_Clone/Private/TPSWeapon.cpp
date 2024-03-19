@@ -48,6 +48,8 @@ void ATPSWeapon::FireInternal()
 {
 	if (weaponSound)
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), weaponSound, GetActorLocation());
+	if(!weaponFireEffectComp->Template.IsNull())
+		weaponFireEffectComp->Activate(true);
 }
 
 void ATPSWeapon::ServerFire_Implementation()

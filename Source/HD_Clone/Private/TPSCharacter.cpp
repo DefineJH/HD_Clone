@@ -239,11 +239,12 @@ void ATPSCharacter::StartPlayFireAnimation()
 {
 	if (curWeapon)
 	{
+		double fireRate = curWeapon->getFireRate();
 		UAnimMontage* fireMontage = curWeapon->getFireMontage();
 
 		if (fireMontage)
 		{
-			PlayAnimMontage(fireMontage);
+			PlayAnimMontage(fireMontage, fireMontage->GetPlayLength() / fireRate);
 		}
 	}
 }
