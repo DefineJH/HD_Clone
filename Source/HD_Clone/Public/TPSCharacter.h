@@ -40,6 +40,9 @@ public:
 	void FireStart();
 	// FireEnd Initate Function
 	void FireEnd();
+
+	void StartAim();
+	void EndAim();
 protected:
 	ATPSWeapon* SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass);
 	UFUNCTION( BlueprintCallable )
@@ -96,4 +99,5 @@ protected:
 	FRotator controlRot;
 	UPROPERTY(BlueprintReadOnly, Replicated)
 	float controlTurn;
+
 };

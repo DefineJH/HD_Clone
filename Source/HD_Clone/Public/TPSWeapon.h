@@ -9,6 +9,7 @@
 class USkeletalMesh;
 class UParticleSystemComponent;
 class USoundBase;
+class UCameraShakeBase;
 
 UENUM(BlueprintType)
 enum class EWeaponType : uint8
@@ -50,7 +51,7 @@ public:
 	{
 		return curMag == 0;
 	}
-
+	bool canFire() const { return bCanFire; }
 	void Fire();
 
 protected:
@@ -99,4 +100,9 @@ protected:
 	UAnimMontage* reloadMontage;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* fireMontage;
+	
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Camera")
+	TSubclassOf<UCameraShakeBase> cameraShakeClass;
+	double afterFire;
+	bool bCanFire;
 };

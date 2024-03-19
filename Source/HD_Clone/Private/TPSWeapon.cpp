@@ -5,6 +5,8 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
+#include <TPSCharacter.h>
+#include <TPSPlayerController.h>
 // Sets default values
 ATPSWeapon::ATPSWeapon() 
 {
@@ -34,6 +36,10 @@ void ATPSWeapon::BeginPlay()
 void ATPSWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	afterFire += DeltaTime;
+	if (afterFire >= fireRate)
+		bCanFire = true;
 }
 
 void ATPSWeapon::Fire()
@@ -46,10 +52,23 @@ void ATPSWeapon::Fire()
 
 void ATPSWeapon::FireInternal()
 {
+	afterFire = 0;
+	bCanFire = false;
+
 	if (weaponSound)
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), weaponSound, GetActorLocation());
 	if(!weaponFireEffectComp->Template.IsNull())
 		weaponFireEffectComp->Activate(true);
+	if (cameraShakeClass)
+	{
+		ATPSCharacter* parentChar = Cast<ATPSCharacter>(GetOwner());
+		if (!parentChar)
+			return;
+		ATPSPlayerController* playerCont = Cast<ATPSPlayerController>(parentChar->GetController());
+		if (!playerCont)
+			return;
+		playerCont->PlayerCameraManager->StartCameraShake(cameraShakeClass);
+	}
 }
 
 void ATPSWeapon::ServerFire_Implementation()

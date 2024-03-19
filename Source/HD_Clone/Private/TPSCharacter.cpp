@@ -16,7 +16,6 @@
 #include "Net/UnrealNetwork.h"
 
 #include "GameFramework/PawnMovementComponent.h"
-
 // Sets default values
 ATPSCharacter::ATPSCharacter()
 {
@@ -148,7 +147,6 @@ void ATPSCharacter::FireWeapon()
 {
 	if (curWeapon == nullptr)
 		return;
-
 	curWeapon->Fire();
 }
 
@@ -210,6 +208,12 @@ void ATPSCharacter::FireEnd()
 		ServerStopFire();
 	}
 }
+void ATPSCharacter::StartAim()
+{
+}
+void ATPSCharacter::EndAim()
+{
+}
 void ATPSCharacter::ServerStartFire_Implementation()
 {
 	MulticastStartFireAnimation();
@@ -239,13 +243,16 @@ void ATPSCharacter::StartPlayFireAnimation()
 {
 	if (curWeapon)
 	{
+		if (!curWeapon->canFire())
+			return;
 		double fireRate = curWeapon->getFireRate();
 		UAnimMontage* fireMontage = curWeapon->getFireMontage();
-
-		if (fireMontage)
-		{
-			PlayAnimMontage(fireMontage, fireMontage->GetPlayLength() / fireRate);
-		}
+		
+		if (!fireMontage)
+			return;
+		if (GetMesh()->GetAnimInstance()->Montage_IsPlaying(fireMontage))
+			return;
+		PlayAnimMontage(fireMontage, fireMontage->GetPlayLength() / fireRate);
 	}
 }
 

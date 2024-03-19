@@ -37,7 +37,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* LookAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	UInputAction* FocusAction;
+	UInputAction* AimAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* CrouchAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
@@ -52,10 +52,15 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input)
 	float runSpeed = 600.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera)
+	float armLength_Aim = 100.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera)
+	float armLength_NotAim = 200.0f;
+
 	void Move(const FInputActionInstance& Instance);
 	void Look(const FInputActionInstance& Instance);
-	void FocusStart(const FInputActionInstance& Instance);
-	void FocusEnd(const FInputActionInstance& Instance);
+	void StartAim(const FInputActionInstance& Instance);
+	void EndAim(const FInputActionInstance& Instance);
 	void ToggleCrouch(const FInputActionInstance& Instance);
 	void Reload(const FInputActionInstance& Instance);
 	void FireStart(const FInputActionInstance& Instance);

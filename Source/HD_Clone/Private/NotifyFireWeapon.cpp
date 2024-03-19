@@ -9,6 +9,5 @@ void UNotifyFireWeapon::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBa
 
 	if (myCharacter == nullptr)
 		return;
-
 	myCharacter->FireWeapon();
 }
