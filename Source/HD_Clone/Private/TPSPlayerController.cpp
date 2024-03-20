@@ -92,9 +92,13 @@ void ATPSPlayerController::Move(const FInputActionInstance& Instance)
 
 	FVector2D MovementVector = Instance.GetValue().Get<FVector2D>();
 
+	bShouldTurnRight = false;
+	bShouldTurnLeft = false;
 
 	PossessedChar->AddMovementInput(camForward, MovementVector.Y);
 	PossessedChar->AddMovementInput(camRight, MovementVector.X);
+	
+	
 }
 
 void ATPSPlayerController::Look(const FInputActionInstance& Instance)
@@ -110,35 +114,39 @@ void ATPSPlayerController::Look(const FInputActionInstance& Instance)
 
 	FRotator springArmRot = springArmComp->GetComponentRotation();
 	FVector2D LookVector = Instance.GetValue().Get<FVector2D>();
-
-	//FRotator offset = GetControlRotation() - PossessedChar->GetActorRotation();
-	//offset.Normalize();
-	//UCharacterMovementComponent* movementComp = Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent());
-	//if (PossessedChar->GetVelocity().Length() == 0)
-	//{
-	//	if (offset.Yaw >= 90.f)
-	//	{
-	//		//Turn Right
-	//		movementComp->bUseControllerDesiredRotation = true;
-	//		movementComp->bOrientRotationToMovement = false;
-	//		bShouldTurnRight = true;
-	//	}
-	//	else if (offset.Yaw <= -90.f)
-	//	{
-	//		// Turn Left
-	//		movementComp->bUseControllerDesiredRotation = true;
-	//		movementComp->bOrientRotationToMovement = false;
-	//		bShouldTurnLeft = true;
-	//	}
-	//	else if(-1.f <= offset.Yaw && offset.Yaw <= 1.f)
-	//	{
-	//		movementComp->bUseControllerDesiredRotation = false;
-	//		movementComp->bOrientRotationToMovement = true;
-	//		bShouldTurnRight = true;
-	//		bShouldTurnLeft = true;
-	//	}
-	//}
-	//UE_LOG(LogTemp, Log, L"%f", offset.Yaw);
+	// turn trigger
+	if (PossessedChar->GetVelocity().IsNearlyZero())
+	{
+		FRotator offset = GetControlRotation() - PossessedChar->GetActorRotation();
+		offset.Normalize();
+		UCharacterMovementComponent* movementComp = Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent());
+		if (offset.Yaw >= 90.f)
+		{
+			//Turn Right
+			movementComp->bUseControllerDesiredRotation = true;
+			movementComp->bOrientRotationToMovement = false;
+			bShouldTurnRight = true;
+		}
+		else if (offset.Yaw <= -90.f)
+		{
+			// Turn Left
+			movementComp->bUseControllerDesiredRotation = true;
+			movementComp->bOrientRotationToMovement = false;
+			bShouldTurnLeft = true;
+		}
+		else if (-1.f <= offset.Yaw && offset.Yaw <= 1.f)
+		{
+			movementComp->bUseControllerDesiredRotation = false;
+			movementComp->bOrientRotationToMovement = true;
+			bShouldTurnRight = false;
+			bShouldTurnLeft = false;
+		}
+	}
+	else
+	{
+		bShouldTurnRight = false;
+		bShouldTurnLeft = false;
+	}
 	PossessedChar->AddControllerYawInput(LookVector.Y);
 	PossessedChar->AddControllerPitchInput(LookVector.X);
 }
