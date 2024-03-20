@@ -136,8 +136,16 @@ void ATPSPlayerController::Look(const FInputActionInstance& Instance)
 		}
 		else if (-1.f <= offset.Yaw && offset.Yaw <= 1.f)
 		{
-			movementComp->bUseControllerDesiredRotation = false;
-			movementComp->bOrientRotationToMovement = true;
+			if (bIsAiming)
+			{
+				movementComp->bUseControllerDesiredRotation = true;
+				movementComp->bOrientRotationToMovement = false;
+			}
+			else
+			{
+				movementComp->bUseControllerDesiredRotation = false;
+				movementComp->bOrientRotationToMovement = true;
+			}
 			bShouldTurnRight = false;
 			bShouldTurnLeft = false;
 		}
@@ -162,8 +170,11 @@ void ATPSPlayerController::StartAim(const FInputActionInstance& Instance)
 		return;
 	EndSprint(Instance);
 	bIsAiming = true;
-	Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent())->bUseControllerDesiredRotation = true;
-	Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent())->bOrientRotationToMovement = false;
+	UCharacterMovementComponent* movementComp = Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent());
+	if (movementComp == nullptr)
+		return;
+	movementComp->bUseControllerDesiredRotation = true;
+	movementComp->bOrientRotationToMovement = false;
 	springArmComp->TargetArmLength = armLength_Aim;
 }
 
@@ -176,8 +187,12 @@ void ATPSPlayerController::EndAim(const FInputActionInstance& Instance)
 	
 	if (springArmComp == nullptr)
 		return;
-	Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent())->bUseControllerDesiredRotation = false;
-	Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent())->bOrientRotationToMovement = true;
+
+	UCharacterMovementComponent* movementComp = Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent());
+	if (movementComp == nullptr)
+		return;
+	movementComp->bUseControllerDesiredRotation = false;
+	movementComp->bOrientRotationToMovement = true;
 	bIsAiming = false;
 	springArmComp->TargetArmLength = armLength_NotAim;
 }
