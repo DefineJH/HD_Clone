@@ -14,10 +14,17 @@
 #include "GameFramework/SpringArmComponent.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
-
+#include "Net/UnrealNetwork.h"
+#include <TPSPlayerState.h>
 void ATPSPlayerController::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+}
+
+ATPSPlayerController::ATPSPlayerController() : APlayerController()
+{
+	bReplicates = true;
+	SetReplicates(true);
 }
 
 void ATPSPlayerController::BeginPlay()
@@ -62,6 +69,13 @@ void ATPSPlayerController::SetupInputComponent()
 
 }
 
+void ATPSPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ATPSPlayerController, ReplicatedMaxSpeed);
+}
+
 
 void ATPSPlayerController::OnPossess(APawn* aPawn)
 {
@@ -92,12 +106,15 @@ void ATPSPlayerController::Move(const FInputActionInstance& Instance)
 
 	FVector2D MovementVector = Instance.GetValue().Get<FVector2D>();
 
-	bShouldTurnRight = false;
-	bShouldTurnLeft = false;
+
+	ATPSPlayerState* playerState = Cast<ATPSPlayerState>(PossessedChar->GetPlayerState());
+	if (playerState == nullptr)
+		return;
+
+	playerState->ServerRequestTurn(false, false);
 
 	PossessedChar->AddMovementInput(camForward, MovementVector.Y);
 	PossessedChar->AddMovementInput(camRight, MovementVector.X);
-	
 	
 }
 
@@ -111,6 +128,9 @@ void ATPSPlayerController::Look(const FInputActionInstance& Instance)
 
 	if (springArmComp == nullptr)
 		return;
+	ATPSPlayerState* playerState = Cast<ATPSPlayerState>(PossessedChar->GetPlayerState());
+	if (playerState == nullptr)
+		return;
 
 	FRotator springArmRot = springArmComp->GetComponentRotation();
 	FVector2D LookVector = Instance.GetValue().Get<FVector2D>();
@@ -120,40 +140,56 @@ void ATPSPlayerController::Look(const FInputActionInstance& Instance)
 		FRotator offset = GetControlRotation() - PossessedChar->GetActorRotation();
 		offset.Normalize();
 		UCharacterMovementComponent* movementComp = Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent());
+		
+
 		if (offset.Yaw >= 90.f)
 		{
-			//Turn Right
-			movementComp->bUseControllerDesiredRotation = true;
-			movementComp->bOrientRotationToMovement = false;
-			bShouldTurnRight = true;
+			if (HasAuthority())
+			{
+				MulticastChangeMovementMode(true, false);
+				playerState->ServerRequestTurn(true, false);
+			}
+			else
+			{
+				ServerChangeMovementMode(true, false);
+				playerState->ServerRequestTurn(true, false);
+			}
 		}
 		else if (offset.Yaw <= -90.f)
 		{
 			// Turn Left
-			movementComp->bUseControllerDesiredRotation = true;
-			movementComp->bOrientRotationToMovement = false;
-			bShouldTurnLeft = true;
+			if (HasAuthority())
+			{
+				MulticastChangeMovementMode(true, false);
+			}
+			else
+			{
+				ServerChangeMovementMode(true, false);
+			}
+			playerState->ServerRequestTurn(false, true);
 		}
 		else if (-1.f <= offset.Yaw && offset.Yaw <= 1.f)
 		{
 			if (bIsAiming)
 			{
-				movementComp->bUseControllerDesiredRotation = true;
-				movementComp->bOrientRotationToMovement = false;
+				if (HasAuthority())
+					MulticastChangeMovementMode(true, false);
+				else
+					ServerChangeMovementMode(true, false);
 			}
 			else
 			{
-				movementComp->bUseControllerDesiredRotation = false;
-				movementComp->bOrientRotationToMovement = true;
+				if (HasAuthority())
+					MulticastChangeMovementMode(false, true);
+				else
+					ServerChangeMovementMode(false, true);
 			}
-			bShouldTurnRight = false;
-			bShouldTurnLeft = false;
+			playerState->ServerRequestTurn(false, false);
 		}
 	}
 	else
 	{
-		bShouldTurnRight = false;
-		bShouldTurnLeft = false;
+		playerState->ServerRequestTurn(false, false);
 	}
 	PossessedChar->AddControllerYawInput(LookVector.Y);
 	PossessedChar->AddControllerPitchInput(LookVector.X);
@@ -173,8 +209,12 @@ void ATPSPlayerController::StartAim(const FInputActionInstance& Instance)
 	UCharacterMovementComponent* movementComp = Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent());
 	if (movementComp == nullptr)
 		return;
-	movementComp->bUseControllerDesiredRotation = true;
-	movementComp->bOrientRotationToMovement = false;
+
+	if (HasAuthority())
+		MulticastChangeMovementMode(true, false);
+	else
+		ServerChangeMovementMode(true, false);
+
 	springArmComp->TargetArmLength = armLength_Aim;
 }
 
@@ -191,8 +231,12 @@ void ATPSPlayerController::EndAim(const FInputActionInstance& Instance)
 	UCharacterMovementComponent* movementComp = Cast<UCharacterMovementComponent>(PossessedChar->GetMovementComponent());
 	if (movementComp == nullptr)
 		return;
-	movementComp->bUseControllerDesiredRotation = false;
-	movementComp->bOrientRotationToMovement = true;
+
+	if (HasAuthority())
+		MulticastChangeMovementMode(false, true);
+	else
+		ServerChangeMovementMode(false, true);
+
 	bIsAiming = false;
 	springArmComp->TargetArmLength = armLength_NotAim;
 }
@@ -243,7 +287,7 @@ void ATPSPlayerController::StartSprint(const FInputActionInstance& Instance)
 	
 	FireEnd(Instance);
 	EndAim(Instance);
-	PossessedChar->GetCharacterMovement()->MaxWalkSpeed = runSpeed;
+	ServerRequestChangeMaxSpeed(runSpeed);
 }
 
 void ATPSPlayerController::EndSprint(const FInputActionInstance& Instance)
@@ -251,6 +295,45 @@ void ATPSPlayerController::EndSprint(const FInputActionInstance& Instance)
 	if (PossessedChar == nullptr)
 		return;
 
-	PossessedChar->GetCharacterMovement()->MaxWalkSpeed = walkSpeed;
+	ServerRequestChangeMaxSpeed(walkSpeed);
 }
 
+void ATPSPlayerController::ServerRequestChangeMaxSpeed_Implementation(float NewSpeed)
+{
+	if (HasAuthority())
+	{
+		ReplicatedMaxSpeed = NewSpeed;
+		OnRep_MaxSpeed();
+	}
+}
+bool ATPSPlayerController::ServerRequestChangeMaxSpeed_Validate(float NewSpeed)
+{
+	return true;
+}
+void ATPSPlayerController::OnRep_MaxSpeed()
+{
+	Cast<UCharacterMovementComponent>(GetPawn()->GetMovementComponent())->MaxWalkSpeed = ReplicatedMaxSpeed;
+}
+
+
+void ATPSPlayerController::MulticastChangeMovementMode_Implementation(bool bUseControllerRotation, bool bOrientToMovement)
+{
+	APawn* PossessedPawn = GetPawn();
+	if (!PossessedPawn)
+		return;
+
+	UCharacterMovementComponent* MovementComp = Cast<UCharacterMovementComponent>(PossessedPawn->GetMovementComponent());
+	if (!MovementComp)
+		return;
+
+	MovementComp->bUseControllerDesiredRotation = bUseControllerRotation;
+	MovementComp->bOrientRotationToMovement = bOrientToMovement;
+}
+void ATPSPlayerController::ServerChangeMovementMode_Implementation(bool bUseControllerRotation, bool bOrientToMovement)
+{
+	MulticastChangeMovementMode(bUseControllerRotation, bOrientToMovement);
+}
+bool ATPSPlayerController::ServerChangeMovementMode_Validate(bool bUseControllerRotation, bool bOrientToMovement)
+{
+	return true;
+}

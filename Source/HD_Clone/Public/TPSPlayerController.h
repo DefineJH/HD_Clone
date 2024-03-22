@@ -17,18 +17,16 @@ UCLASS()
 class HD_CLONE_API ATPSPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+public:
+	ATPSPlayerController();
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 public:
 	virtual void PostInitializeComponents() override;
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void OnUnPossess() override;
-
-	UFUNCTION(BlueprintCallable)
-	bool GetShouldTurnRight() const { return bShouldTurnRight; }
-	UFUNCTION(BlueprintCallable)
-	bool GetShouldTurnLeft() const { return bShouldTurnLeft; }
 protected:
 
 	UPROPERTY(BlueprintReadOnly)
@@ -73,9 +71,19 @@ protected:
 	void StartSprint(const FInputActionInstance& Instance);
 	void EndSprint(const FInputActionInstance& Instance);
 
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerChangeMovementMode(bool bUseControllerRotation, bool bOrientToMovement);
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastChangeMovementMode(bool bUseControllerRotation, bool bOrientToMovement);
 
-private:
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerRequestChangeMaxSpeed(float NewSpeed);
+	UFUNCTION()
+	void OnRep_MaxSpeed();
+protected:
+
 	bool bIsAiming = false;
-	bool bShouldTurnRight = false;
-	bool bShouldTurnLeft = false;
+
+	UPROPERTY(ReplicatedUsing = OnRep_MaxSpeed)
+	float ReplicatedMaxSpeed;
 };
