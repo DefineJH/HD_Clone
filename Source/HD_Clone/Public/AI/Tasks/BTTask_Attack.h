@@ -14,5 +14,14 @@ class HD_CLONE_API UBTTask_Attack : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
 
+	UBTTask_Attack();
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+	void FinishTask();
+private:
+
+	TObjectPtr<UBehaviorTreeComponent> MyOwnerComp;
+	
+	FTimerDelegate TimerDelegate;
+	FTimerHandle AttackTimer;
 };

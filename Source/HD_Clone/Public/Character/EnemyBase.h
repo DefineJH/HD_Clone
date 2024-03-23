@@ -19,6 +19,9 @@ public:
 	AEnemyBase();
 	virtual void PossessedBy(AController* NewController) override;
 	void PlayAttackMontage();
+
+	UFUNCTION(Server,Reliable)
+	virtual void ServerAttack();
 protected:
 	virtual void BeginPlay() override;
 
@@ -27,14 +30,11 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<AEnemyAIController> EnemyAIController;
-
-	UFUNCTION(Server,Reliable)
-	virtual void ServerAttack();
-
+	
 	UFUNCTION(NetMulticast,Reliable)
 	virtual void MultiAttack();
 
-	virtual void EnemyPlayMontage(UAnimMontage* PlayMontage);
+	virtual float EnemyPlayMontage(UAnimMontage* PlayMontage);
 
 
 private:
@@ -74,4 +74,9 @@ private:
 	/** 공격 애니메이션*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Combat, meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* AttackMontage;
+
+	float MontageRate;
+
+public:
+	const float GetMontageRate() { return MontageRate;}
 };
