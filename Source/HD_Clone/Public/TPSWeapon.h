@@ -65,6 +65,8 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Weapon")
 	USkeletalMeshComponent* weaponMeshComp;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Weapon")
+	USceneComponent* firePositionComp;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Weapon")
 	USkeletalMesh* weaponMesh;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Weapon")
 	USoundBase* weaponSound;
@@ -95,7 +97,6 @@ protected:
 	int curRound;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Weapon")
 	bool bIsAuto;
-
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* reloadMontage;
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Animation")

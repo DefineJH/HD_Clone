@@ -17,6 +17,9 @@ ATPSWeapon::ATPSWeapon()
 
 	weaponFireEffectComp = CreateDefaultSubobject<UParticleSystemComponent>(L"Fire Effect");
 	weaponFireEffectComp->SetupAttachment(weaponMeshComp);
+	
+	firePositionComp = CreateDefaultSubobject<USceneComponent>(L"Fire Position");
+	firePositionComp->SetupAttachment(weaponMeshComp);
 
 	bReplicates = true;
 	SetReplicates(true);
@@ -54,11 +57,14 @@ void ATPSWeapon::FireInternal()
 {
 	afterFire = 0;
 	bCanFire = false;
-
+	
+	// sound play
 	if (weaponSound)
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), weaponSound, GetActorLocation());
+	// fire effect activate
 	if(!weaponFireEffectComp->Template.IsNull())
 		weaponFireEffectComp->Activate(true);
+	// camera shake
 	if (cameraShakeClass)
 	{
 		ATPSCharacter* parentChar = Cast<ATPSCharacter>(GetOwner());
@@ -68,6 +74,19 @@ void ATPSWeapon::FireInternal()
 		if (!playerCont)
 			return;
 		playerCont->PlayerCameraManager->StartCameraShake(cameraShakeClass);
+	}
+	// hit process
+	FHitResult hitResult;
+	FVector startPos = firePositionComp->GetComponentLocation();
+	FVector endPos = startPos + firePositionComp->GetForwardVector() * maxRange;
+	DrawDebugLine(GetWorld(), startPos, endPos, FColor::Red, false, 3.0);
+	bool isHit = GetWorld()->LineTraceSingleByChannel(hitResult, startPos, endPos ,ECollisionChannel::ECC_Visibility);
+	if (isHit)
+	{
+		if (hitResult.bBlockingHit)
+		{
+			DrawDebugSphere(GetWorld(), hitResult.Location, 10.0, 10, FColor::Red, false ,3.0f);
+		}
 	}
 }
 
