@@ -11,8 +11,123 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="686dafc9-6f73-4b11-83c6-aee9a8cb6180" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/HD_Clone.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/HD_Clone.uproject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/HD_Clone/HD_Clone.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/HD_Clone/HD_Clone.Build.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.HD_Clone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HD_Clone/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/BB_EnemyBlackBoard.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BB_EnemyBlackBoard.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/BP_EnemyAIController.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/BT_EnemyBehaviorTree.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BT_EnemyBehaviorTree.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BP_EnemyBase.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Crawl/AS_NAAT_Zombie_Crawl_Idle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Crawl/AS_NAAT_Zombie_Crawl_Slow.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Crawl/AS_NAAT_Zombie_FastCrawl.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Crawl/Attack/AS_NAAT_Zombie_Attack_LH_Crawl.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Crawl/Attack/AS_NAAT_Zombie_Attack_RH_Crawl.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Crawl/BS_Zombie_NL_Crawl.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/GetUp/AM_NAAT_Human_ZombieGetUpToScream.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/GetUp/AS_NAAT_Zombie_LieProne_To_Idle_Stand.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/GetUp/AS_NAAT_Zombie_SlumpToStand.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Hop/LeftLeg/AS_NAAT_Zombie_LL_HopFast_Forward.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Hop/LeftLeg/AS_NAAT_Zombie_LL_HopSlow_Forward.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Hop/LeftLeg/AS_NAAT_Zombie_LL_Idle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Hop/LeftLeg/BS_Zombie_LL_Hop.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Hop/RightLeg/AS_NAAT_Zombie_RL_HopFast_Forward.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Hop/RightLeg/AS_NAAT_Zombie_RL_HopSlow_Forward.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Hop/RightLeg/AS_NAAT_Zombie_RL_Idle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Hop/RightLeg/BS_Zombie_RL_Hop.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Human/AM_NAAT_Human.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Human/AS_NAAT_Human_Grab_To_Kick.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Human/AS_NAAT_Human_Grab_To_Munching.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Human/AS_NAAT_Human_Grab_To_Push.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Human/AS_NAAT_Human_Grab_To_TakeDown.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Human/AS_NAAT_Human_Grab_To_Wrestle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Human/AS_NAAT_Human_Idle_To_Grab.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Human/AS_NAAT_Human_TakeDown_To_Munching.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Zombie/AM_NAAT_Zombie.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Zombie/AS_NAAT_Zombie_Grab_To_Kicked.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Zombie/AS_NAAT_Zombie_Grab_To_Munching.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Zombie/AS_NAAT_Zombie_Grab_To_Pushed.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Zombie/AS_NAAT_Zombie_Grab_To_TakeDown.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Zombie/AS_NAAT_Zombie_Grab_To_Wrestle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Zombie/AS_NAAT_Zombie_Idle_To_Grab.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Interactive/Zombie/AS_NAAT_Zombie_TakeDown_To_Munching.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Standing/AS_NAAT_Zombie_BL_Idle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Standing/AS_NAAT_Zombie_BL_Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Standing/AS_NAAT_Zombie_BL_Walk.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Standing/Attack/AS_NAAT_Zombie_Attack_BH_Stand.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Standing/Attack/AS_NAAT_Zombie_Attack_LH_Stand.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Standing/Attack/AS_NAAT_Zombie_Attack_RH_Stand.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Standing/BS_Zombie_BL_Walk.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Animations/Taunt/AS_NAAT_Zombie_Roar.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Blueprints/ABP_MontagePlay.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Blueprints/BP_Showcase.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Blueprints/BP_Showcase_Cinimatic.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Materials/MI_UE4Man_ChestLogo.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Materials/MI_UE4Man_ChestLogo_2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Materials/M_Male_Body.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Materials/M_Male_Body_2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Materials/MaterialLayers/MF_GlossyBlack_Latex_UE4.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Materials/MaterialLayers/MF_Plastic_Shiny_Beige.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Materials/MaterialLayers/MF_Plastic_Shiny_Beige_LOGO.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Materials/MaterialLayers/MF_SoftMetal_UE4.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Mesh/PHYS_Mannequin.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Mesh/SKEL_UE4_Manaquin_Skeleton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Mesh/SK_Mannequin.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Textures/T_Male_Mask.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Textures/T_Male_N.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Textures/T_UE4Logo_Mask.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Mannequin/Character/Textures/T_UE4Logo_N.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Material/M_CubeMaterial.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Material/M_CycRooM_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/StaticMesh/SM_1M_Cube.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Textures/T_ML_Aluminum01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Textures/T_ML_Aluminum01_N.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Textures/T_ML_Rubber_Blue_01_D.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Textures/T_ML_Rubber_Blue_01_N.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/EpicAssets/Textures/T_MeterGrid_01_M.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/BSP_ZombieAnims/Maps/Animation_Showcase.umap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Materials/MI_Skin1_Bloddy_Lower.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Materials/MI_Skin1_Bloddy_Upper.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Materials/MI_Skin1_Lower.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Materials/MI_Skin1_Upper.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Materials/MI_Skin2_Bloody_Lower.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Materials/MI_Skin2_Bloody_Upper.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Materials/MI_Skin2_Lower.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Materials/MI_Skin2_Upper.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Materials/M_MutantBase.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/SK_Bio_Mutant.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/SK_Bio_Mutant.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/SK_Bio_Mutant_Anim.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/SK_Bio_Mutant_Skeleton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/Bloody/T_Biomech_Mutant_Skin_1_Bottom_Bloody_RGBA.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/Bloody/T_Biomech_Mutant_Skin_1_Bottom_Bloody_RGBA.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/Bloody/T_Biomech_Mutant_Skin_1_Bottom_Bloody_a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/Bloody/T_Biomech_Mutant_Skin_1_Bottom_Bloody_a.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/Bloody/T_Biomech_Mutant_Skin_1_Bottom_Bloody_n.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/Bloody/T_Biomech_Mutant_Skin_1_Bottom_Bloody_n.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/Bloody/T_Biomech_Mutant_Skin_1_Top_Bloody_RGBA.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/Bloody/T_Biomech_Mutant_Skin_1_Top_Bloody_RGBA.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/Bloody/T_Biomech_Mutant_Skin_1_Top_Bloody_a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/Bloody/T_Biomech_Mutant_Skin_1_Top_Bloody_a.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/Bloody/T_Biomech_Mutant_Skin_1_Top_Bloody_n.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/Bloody/T_Biomech_Mutant_Skin_1_Top_Bloody_n.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Bottom_RGBA.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Bottom_RGBA.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Bottom_a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Bottom_a.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Bottom_emissive.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Bottom_emissive.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Bottom_n.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Bottom_n.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Top_RGBA.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Top_RGBA.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Top_a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Top_a.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Top_emissive.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Top_emissive.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Top_n.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_1/T_Biomech_Mutant_Skin_1_Top_n.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/Bloody/T_Biomech_Mutant_Skin_2_Bottom_Bloody_RGBA.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/Bloody/T_Biomech_Mutant_Skin_2_Bottom_Bloody_RGBA.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/Bloody/T_Biomech_Mutant_Skin_2_Bottom_Bloody_a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/Bloody/T_Biomech_Mutant_Skin_2_Bottom_Bloody_a.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/Bloody/T_Biomech_Mutant_Skin_2_Bottom_Bloody_n.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/Bloody/T_Biomech_Mutant_Skin_2_Bottom_Bloody_n.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/Bloody/T_Biomech_Mutant_Skin_2_Top_Bloody_RGBA.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/Bloody/T_Biomech_Mutant_Skin_2_Top_Bloody_RGBA.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/Bloody/T_Biomech_Mutant_Skin_2_Top_Bloody_a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/Bloody/T_Biomech_Mutant_Skin_2_Top_Bloody_a.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/Bloody/T_Biomech_Mutant_Skin_2_Top_Bloody_n.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/Bloody/T_Biomech_Mutant_Skin_2_Top_Bloody_n.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Bottom_RGBA.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Bottom_RGBA.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Bottom_a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Bottom_a.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Bottom_emissive.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Bottom_emissive.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Bottom_n.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Bottom_n.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Top_RGBA.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Top_RGBA.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Top_a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Top_a.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Top_emissive.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Top_emissive.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Top_n.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Textures/Skin_2/T_Biomech_Mutant_Skin_2_Top_n.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/Maps/TempMap/3/XU/VTID2EV67ET7MCOC09K0JC.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/HD_Clone/Private/AI/EnemyAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/HD_Clone/Private/AI/EnemyAIController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/HD_Clone/Private/Character/EnemyBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/HD_Clone/Private/Character/EnemyBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/HD_Clone/Public/Character/EnemyBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/HD_Clone/Public/Character/EnemyBase.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +138,6 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
@@ -237,6 +349,7 @@
       <workItem from="1710553216611" duration="237000" />
       <workItem from="1710553736217" duration="7121000" />
       <workItem from="1710644011726" duration="5804000" />
+      <workItem from="1711179897384" duration="4309000" />
     </task>
     <servers />
   </component>
@@ -245,5 +358,16 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/HD_Clone/Private/AI/Tasks/BTTask_Attack.cpp</url>
+          <line>10</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

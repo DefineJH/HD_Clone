@@ -5,6 +5,8 @@
 
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Perception/AIPerceptionComponent.h"
+#include "Perception/AIPerceptionTypes.h"
 
 AEnemyAIController::AEnemyAIController()
 {
@@ -13,5 +15,6 @@ AEnemyAIController::AEnemyAIController()
 	//
 	// BehaviorTreeComponent =CreateDefaultSubobject<UBehaviorTreeComponent>("BehaviorTreeComponent");
 	// check(BehaviorTreeComponent);
-	
+
+	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("AIPerception");
 }

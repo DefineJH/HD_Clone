@@ -6,6 +6,7 @@
 #include "AI/EnemyAIController.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 AEnemyBase::AEnemyBase()
 {
@@ -31,15 +32,33 @@ void AEnemyBase::BeginPlay()
 	
 }
 
-void AEnemyBase::Tick(float DeltaTime)
+void AEnemyBase::EnemyPlayMontage(UAnimMontage* PlayMontage)
 {
-	Super::Tick(DeltaTime);
-
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && AttackMontage)
+	{
+		AnimInstance->Montage_Play(PlayMontage);
+	}
 }
 
-void AEnemyBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void AEnemyBase::PlayAttackMontage()
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	EnemyPlayMontage(AttackMontage);
+}
 
+void AEnemyBase::ServerAttack_Implementation()
+{
+	MultiAttack();
+}
+
+void AEnemyBase::MultiAttack_Implementation()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && AttackMontage)
+	{
+		AnimInstance->Montage_Play(AttackMontage);
+		// float Rate = AnimInstance->Montage_GetPlayRate(AttackMontage);
+		// UKismetSystemLibrary::Delay(this,Rate,FLatentActionInfo());
+	}
 }
 
