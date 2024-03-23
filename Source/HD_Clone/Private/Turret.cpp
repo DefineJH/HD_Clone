@@ -65,7 +65,8 @@ void ATurret::FindTarget()
 			if (!ClosestTarget || GetDistanceTo(HitResult) < BestDistance)
 			{
 				UE_LOG(LogTemp, Log, L"%s overlapped", *HitResult->GetName());
-				if (UTurretSystemFunctionLibrary::HasLineOfSight(this, SightHitResult, GetActorLocation(), HitResult->GetActorLocation(), ActorsToIgnore))
+				bool bHasObstacle = UTurretSystemFunctionLibrary::HasLineOfSight(this, SightHitResult, GetActorLocation(), HitResult->GetActorLocation(), ActorsToIgnore);
+				if (!bHasObstacle)
 				{
 					ClosestTarget = HitResult;
 					BestDistance = GetDistanceTo(ClosestTarget);
