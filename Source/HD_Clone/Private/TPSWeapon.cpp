@@ -57,7 +57,6 @@ void ATPSWeapon::FireInternal()
 {
 	afterFire = 0;
 	bCanFire = false;
-	
 	// sound play
 	if (weaponSound)
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), weaponSound, GetActorLocation());
@@ -79,6 +78,7 @@ void ATPSWeapon::FireInternal()
 	FHitResult hitResult;
 	FVector startPos = firePositionComp->GetComponentLocation();
 	FVector endPos = startPos + firePositionComp->GetForwardVector() * maxRange;
+	curMag--;
 	DrawDebugLine(GetWorld(), startPos, endPos, FColor::Red, false, 3.0);
 	bool isHit = GetWorld()->LineTraceSingleByChannel(hitResult, startPos, endPos ,ECollisionChannel::ECC_Visibility);
 	if (isHit)

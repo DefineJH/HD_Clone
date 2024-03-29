@@ -51,6 +51,8 @@ public:
 	{
 		return curMag == 0;
 	}
+	int getCurMag() const { return curMag; }
+	bool hasMag() const { return curMag > 0; }
 	bool canFire() const { return bCanFire; }
 	void Fire();
 
