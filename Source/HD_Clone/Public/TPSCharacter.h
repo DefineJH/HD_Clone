@@ -30,9 +30,15 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
-	// Reload Initiate Function
+	/**
+	* Called From PlayerController when pressed R button, Trigger Server Reload -> Play Reload Animation
+	* When Anim Montage Finishes, Notify Reload Triggers and reload curWeapon
+	*/
+	void ReloadStart();
+	/**
+	* Called when Reload Finishes from NotifyReload, Reload CurWeapon 
+	*/
 	void Reload();
-	
 	// Call Fire for curWeapon
 	void FireWeapon();
 
@@ -43,8 +49,6 @@ public:
 
 	void StartAim();
 	void EndAim();
-
-
 protected:
 	ATPSWeapon* SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass);
 	UFUNCTION( BlueprintCallable )
@@ -52,6 +56,7 @@ protected:
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerReload();
+
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerStartFire();
 	UFUNCTION(Server, Reliable, WithValidation)
@@ -74,7 +79,6 @@ protected:
 	void GetControlRotation_Rep();
 
 	void GetTurn_Rep();
-
 private:
 	void SetupWeapon();
 protected:
@@ -97,7 +101,7 @@ protected:
 
 
 
-	UPROPERTY( BlueprintReadOnly, Replicated)
+	UPROPERTY(BlueprintReadOnly, Replicated)
 	FRotator controlRot;
 	UPROPERTY(BlueprintReadOnly, Replicated)
 	float controlTurn;

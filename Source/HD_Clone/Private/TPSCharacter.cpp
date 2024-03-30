@@ -130,8 +130,14 @@ void ATPSCharacter::SetupWeapon()
 
 #pragma region Reload Functions
 
-void ATPSCharacter::Reload()
+void ATPSCharacter::ReloadStart()
 {
+	if (curWeapon == nullptr)
+		return;
+	if (!curWeapon->canReload())
+		return;
+
+
 	// Host -> 멀티캐스트
 	if (HasAuthority())
 	{
@@ -144,7 +150,14 @@ void ATPSCharacter::Reload()
 	}
 }
 
-
+void ATPSCharacter::Reload()
+{
+	if (curWeapon == nullptr)
+		return;
+	if (!curWeapon->canReload())
+		return;
+	curWeapon->Reload();
+}
 
 void ATPSCharacter::ServerReload_Implementation()
 {
@@ -181,7 +194,7 @@ void ATPSCharacter::FireWeapon()
 {
 	if (curWeapon == nullptr)
 		return;
-	if (curWeapon->hasMag())
+	if (curWeapon->getCurRound() > 0)
 		curWeapon->Fire();
 	else
 		StopPlayFireAnimation();

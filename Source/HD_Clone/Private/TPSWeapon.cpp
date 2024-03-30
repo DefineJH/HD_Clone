@@ -33,6 +33,9 @@ void ATPSWeapon::BeginPlay()
 		weaponMeshComp->SetSkeletalMesh(weaponMesh);
 	if (weaponFireEffect)
 		weaponFireEffectComp->SetTemplate(weaponFireEffect);
+
+	curRound = roundPerMag;
+	curMag = maxMag;
 }
 
 // Called every frame
@@ -51,6 +54,17 @@ void ATPSWeapon::Fire()
 		MulticastFire();
 	else
 		ServerFire();
+}
+
+void ATPSWeapon::Reload()
+{
+	if (curMag <= 0)
+		return;
+	else
+	{
+		curMag--;
+		curRound = roundPerMag;
+	}
 }
 
 void ATPSWeapon::FireInternal()
@@ -78,7 +92,7 @@ void ATPSWeapon::FireInternal()
 	FHitResult hitResult;
 	FVector startPos = firePositionComp->GetComponentLocation();
 	FVector endPos = startPos + firePositionComp->GetForwardVector() * maxRange;
-	curMag--;
+	curRound--;
 	DrawDebugLine(GetWorld(), startPos, endPos, FColor::Red, false, 3.0);
 	bool isHit = GetWorld()->LineTraceSingleByChannel(hitResult, startPos, endPos ,ECollisionChannel::ECC_Visibility);
 	if (isHit)

@@ -257,7 +257,7 @@ void ATPSPlayerController::Reload(const FInputActionInstance& Instance)
 	if (PossessedChar == nullptr)
 		return;
 
-	PossessedChar->Reload();
+	PossessedChar->ReloadStart();
 }
 
 void ATPSPlayerController::FireStart(const FInputActionInstance& Instance)
