@@ -127,10 +127,17 @@ void ATPSCharacter::SetupWeapon()
 }
 
 
+
 #pragma region Reload Functions
 
-void ATPSCharacter::Reload()
+void ATPSCharacter::ReloadStart()
 {
+	if (curWeapon == nullptr)
+		return;
+	if (!curWeapon->canReload())
+		return;
+
+
 	// Host -> 멀티캐스트
 	if (HasAuthority())
 	{
@@ -143,11 +150,13 @@ void ATPSCharacter::Reload()
 	}
 }
 
-void ATPSCharacter::FireWeapon()
+void ATPSCharacter::Reload()
 {
 	if (curWeapon == nullptr)
 		return;
-	curWeapon->Fire();
+	if (!curWeapon->canReload())
+		return;
+	curWeapon->Reload();
 }
 
 void ATPSCharacter::ServerReload_Implementation()
@@ -181,6 +190,16 @@ void ATPSCharacter::PlayReloadAnimation()
 
 #pragma region Fire Functions
 
+void ATPSCharacter::FireWeapon()
+{
+	if (curWeapon == nullptr)
+		return;
+	if (curWeapon->getCurRound() > 0)
+		curWeapon->Fire();
+	else
+		StopPlayFireAnimation();
+}
+
 void ATPSCharacter::FireStart()
 {
 	// Host -> 멀티캐스트
@@ -208,20 +227,25 @@ void ATPSCharacter::FireEnd()
 		ServerStopFire();
 	}
 }
+
 void ATPSCharacter::StartAim()
 {
 }
+
 void ATPSCharacter::EndAim()
 {
 }
+
 void ATPSCharacter::ServerStartFire_Implementation()
 {
 	MulticastStartFireAnimation();
 }
+
 bool ATPSCharacter::ServerStartFire_Validate()
 {
 	return true;
 }
+
 void ATPSCharacter::MulticastStartFireAnimation_Implementation()
 {
 	StartPlayFireAnimation();
@@ -231,19 +255,22 @@ void ATPSCharacter::ServerStopFire_Implementation()
 {
 	MulticastStopFireAnimation();
 }
+
 bool ATPSCharacter::ServerStopFire_Validate()
 {
 	return true;
 }
+
 void ATPSCharacter::MulticastStopFireAnimation_Implementation()
 {
 	StopPlayFireAnimation();
 }
+
 void ATPSCharacter::StartPlayFireAnimation()
 {
 	if (curWeapon)
 	{
-		if (!curWeapon->canFire())
+		if (!curWeapon->canFire() || !curWeapon->hasMag())
 			return;
 		double fireRate = curWeapon->getFireRate();
 		UAnimMontage* fireMontage = curWeapon->getFireMontage();

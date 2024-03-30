@@ -49,11 +49,18 @@ public:
 	double getFireRate() const { return fireRate; }
 	bool canReload() const
 	{
-		return curMag == 0;
+		return curMag > 0;
 	}
+	int getCurMag() const { return curMag; }
+	bool hasMag() const { return curMag > 0; }
+
+	int getCurRound() const { return curRound; }
+	int getRoundPerMag() const { return roundPerMag; }
+
 	bool canFire() const { return bCanFire; }
 	void Fire();
-
+	
+	void Reload();
 protected:
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerFire();
