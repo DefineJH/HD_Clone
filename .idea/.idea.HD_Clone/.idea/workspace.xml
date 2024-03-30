@@ -12,11 +12,6 @@
   <component name="ChangeListManager">
     <list default="true" id="686dafc9-6f73-4b11-83c6-aee9a8cb6180" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HD_Clone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HD_Clone/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/BB_EnemyBlackBoard.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BB_EnemyBlackBoard.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/BT_EnemyBehaviorTree.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BT_EnemyBehaviorTree.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/Controller/BP_EnemyAIController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/Controller/BP_EnemyAIController.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Enemys/Zombie/BP_Test.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Zombie/BP_Test.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -276,7 +271,8 @@
       <workItem from="1711179897384" duration="12380000" />
       <workItem from="1711555000632" duration="260000" />
       <workItem from="1711721522787" duration="739000" />
-      <workItem from="1711776497961" duration="1853000" />
+      <workItem from="1711776497961" duration="3072000" />
+      <workItem from="1711807465882" duration="980000" />
     </task>
     <servers />
   </component>
