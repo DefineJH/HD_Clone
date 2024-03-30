@@ -12,19 +12,11 @@
   <component name="ChangeListManager">
     <list default="true" id="686dafc9-6f73-4b11-83c6-aee9a8cb6180" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HD_Clone/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HD_Clone/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/BTService_RandomPoint.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BTService_RandomPoint.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/BB_EnemyBlackBoard.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BB_EnemyBlackBoard.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/AI/BT_EnemyBehaviorTree.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BT_EnemyBehaviorTree.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Enemys/ABP_Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/ABP_Enemy.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Enemys/Zombie/BP_Zombie.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Enemys/Zombie/BSP_ZombieAnims/Animations/Standing/Attack/AM_Zombie_RH_Attack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Zombie/BSP_ZombieAnims/Animations/Standing/Attack/AM_Zombie_RH_Attack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/NewBlueprint.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/NewBlueprint.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/Maps/TempMap/4/HG/Z3JBFB284ZKW57NG7EZRMZ.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/Maps/TempMap/E/MV/FRF1Q9J21PCBP0SSLGGMR2.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/HD_Clone/Private/AI/EnemyAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/HD_Clone/Private/AI/EnemyAIController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/HD_Clone/Private/AI/Tasks/BTTask_Attack.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/HD_Clone/Private/AI/Tasks/BTTask_Attack.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/HD_Clone/Private/Character/EnemyBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/HD_Clone/Private/Character/EnemyBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/HD_Clone/Public/AI/Tasks/BTTask_Attack.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/HD_Clone/Public/AI/Tasks/BTTask_Attack.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/HD_Clone/Public/Character/EnemyBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/HD_Clone/Public/Character/EnemyBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/Controller/BP_EnemyAIController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/Controller/BP_EnemyAIController.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enemys/Zombie/BP_Test.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enemys/Zombie/BP_Test.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,29 +116,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.EpicGames.AspNet.executor": "Debug",
-    "C++ Project.HD_Clone.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Awh",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.EpicGames.AspNet.executor&quot;: &quot;Debug&quot;,
+    &quot;C++ Project.HD_Clone.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Awh&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\User\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\User\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\User\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\User\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\User\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\User\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="C++ Project.HD_Clone">
     <configuration name="HD_Clone" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -282,6 +274,9 @@
       <workItem from="1710553736217" duration="7121000" />
       <workItem from="1710644011726" duration="5804000" />
       <workItem from="1711179897384" duration="12380000" />
+      <workItem from="1711555000632" duration="260000" />
+      <workItem from="1711721522787" duration="739000" />
+      <workItem from="1711776497961" duration="1853000" />
     </task>
     <servers />
   </component>
