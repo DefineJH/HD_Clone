@@ -4,14 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Health.h"
 #include "TPSCharacter.generated.h"
-
 class USpringArmComponent;
 class UCameraComponent;
 class ATPSWeapon;
 
 UCLASS()
-class HD_CLONE_API ATPSCharacter : public ACharacter
+class HD_CLONE_API ATPSCharacter : public ACharacter, public IHealth
 {
 	GENERATED_BODY()
 
@@ -49,6 +49,16 @@ public:
 
 	void StartAim();
 	void EndAim();
+public:
+// health Interface override functions
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	virtual int32 GetHealth() const override;
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	virtual void SetHealth(int32 newHealth) override;
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	virtual void SetDamage(AActor* causer, EDamageType dmgType, int32 damage) override;
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	virtual int32 GetMaxHealth() const override;
 protected:
 	ATPSWeapon* SpawnWeapon(TSubclassOf<ATPSWeapon> weaponClass);
 	UFUNCTION( BlueprintCallable )
@@ -105,5 +115,9 @@ protected:
 	FRotator controlRot;
 	UPROPERTY(BlueprintReadOnly, Replicated)
 	float controlTurn;
-
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "Health")
+	int32 curHealth;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Health")
+	int32 maxHealth;
 };

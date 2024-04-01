@@ -41,6 +41,7 @@ void ATPSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	SetupWeapon();
+	curHealth = maxHealth;
 }
 
 // Called every frame
@@ -236,6 +237,7 @@ void ATPSCharacter::EndAim()
 {
 }
 
+
 void ATPSCharacter::ServerStartFire_Implementation()
 {
 	MulticastStartFireAnimation();
@@ -316,5 +318,26 @@ void ATPSCharacter::GetTurn_Rep()
 
 #pragma endregion
 
+#pragma region Health 
+
+int32 ATPSCharacter::GetHealth() const
+{
+	return 0;
+}
+
+void ATPSCharacter::SetHealth(int32 newHealth)
+{
+}
+
+void ATPSCharacter::SetDamage(AActor* causer, EDamageType dmgType, int32 damage)
+{
+}
+
+int32 ATPSCharacter::GetMaxHealth() const
+{
+	return 0;
+}
+
+#pragma endregion
 
 
