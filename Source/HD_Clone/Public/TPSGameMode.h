@@ -14,4 +14,6 @@ class HD_CLONE_API ATPSGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+public:
+
 };
